@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "esnext",                       // 编译成哪种 ECMAScript 版本
+    "lib": ["dom", "dom.iterable", "esnext"], // 使用哪些库的类型定义
+    "allowJs": true,                          // 是否允许编译 JavaScript 文件
+    "skipLibCheck": true,                     // 跳过库的类型检查
+    "esModuleInterop": true,                  // 允许 CommonJS 模块的默认导入
+    "allowSyntheticDefaultImports": true,     // 允许从没有导出默认值的模块导入默认值
+    "strict": true,                           // 启用所有严格类型检查选项
+    "forceConsistentCasingInFileNames": true, // 文件名大小写强制一致
+    "module": "esnext",                       // 使用哪种模块系统
+    "moduleResolution": "node",               // 模块解析策略
+    "resolveJsonModule": true,                // 允许导入 JSON 模块
+    "isolatedModules": true,                  // 为每个文件生成独立的模块
+    "jsx": "react-jsx",                       // JSX 的处理方式
+    "noEmit": true                            // 不生成输出文件
+  },
+  "include": ["src"],                         // 包含的文件夹
+  "exclude": ["node_modules"]                 // 排除的文件夹
+}
