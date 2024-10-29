@@ -1,15 +1,9 @@
+
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/home/index';
+import RouteWrapper from './routes/RouteWrapper';
 
 const App: React.FC = () => {
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Home />} />
-            </Routes>
-        </Router>
-    );
+    return <RouteWrapper />;
 };
 
 export default App;

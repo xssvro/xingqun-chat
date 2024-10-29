@@ -1,0 +1,19 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#app {
+    height: 100vh;
+    overflow: hidden; /* 禁用页面滚动 */
+    overscroll-behavior: none; /* 防止弹性滚动 */
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    overflow: hidden; /* 禁用页面滚动 */
+    overscroll-behavior: none; /* 防止弹性滚动 */
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Arial, 'Segoe UI', sans-serif;
+}

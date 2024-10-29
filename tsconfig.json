@@ -6,6 +6,7 @@
     "skipLibCheck": true,                     // 跳过库的类型检查
     "esModuleInterop": true,                  // 允许 CommonJS 模块的默认导入
     "allowSyntheticDefaultImports": true,     // 允许从没有导出默认值的模块导入默认值
+    "allowImportingTsExtensions": true,       // 允许从 .ts 文件导入
     "strict": true,                           // 启用所有严格类型检查选项
     "forceConsistentCasingInFileNames": true, // 文件名大小写强制一致
     "module": "esnext",                       // 使用哪种模块系统
