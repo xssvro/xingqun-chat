@@ -14,7 +14,8 @@
     "resolveJsonModule": true,                // 允许导入 JSON 模块
     "isolatedModules": true,                  // 为每个文件生成独立的模块
     "jsx": "react-jsx",                       // JSX 的处理方式
-    "noEmit": true                            // 不生成输出文件
+    "noEmit": true,                            // 不生成输出文件
+    "types": ["vite-plugin-svgr/client"]
   },
   "include": ["src"],                         // 包含的文件夹
   "exclude": ["node_modules"]                 // 排除的文件夹

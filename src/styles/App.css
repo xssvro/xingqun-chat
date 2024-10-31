@@ -17,3 +17,7 @@ html, body {
     padding: 0;
     font-family: 'Helvetica Neue', Arial, 'Segoe UI', sans-serif;
 }
+::selection {
+    background-color: #F7DA66; /* 设置选中的背景颜色 */
+    /*color: #FFF; !* 设置选中的文字颜色 *!*/
+}

@@ -16,6 +16,7 @@ if (rootElement) {
             theme={{
                 token: {
                     colorPrimary: '#F73048',  // 自定义主题色
+                    borderRadius: 3,  // 自定义圆角
                 },
             }}
         >
