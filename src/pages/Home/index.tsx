@@ -1,5 +1,6 @@
 import React from 'react';
-import  { SendOutlined } from '@ant-design/icons';
+import { SendOutlined } from '@ant-design/icons';
+import Chat from './components/Chat.tsx'
 import { Flex, Splitter, Input, Button } from 'antd';
 
 
@@ -8,11 +9,12 @@ const Home: React.FC = () => {
         <div className="h-full">
             <Splitter className="h-full" layout="vertical">
                 <Splitter.Panel>
-                    <Flex className="h-full" justify="center" align="center" vertical={true}>
-                        <h1 className="text-3xl font-bold mb-1">下午好</h1>
-                        我是您的私人智能助理，请问现在能帮您做什么？<br/>
-                        如果需要获得更加专业或定制的助手，可以点击 + 创建自定义助手
-                    </Flex>
+                    {/*<Flex className="h-full" justify="center" align="center" vertical={true}>*/}
+                    {/*    <h1 className="text-3xl font-bold mb-1">下午好</h1>*/}
+                    {/*    我是您的私人智能助理，请问现在能帮您做什么？<br/>*/}
+                    {/*    如果需要获得更加专业或定制的助手，可以点击 + 创建自定义助手*/}
+                    {/*</Flex>*/}
+                    <Chat></Chat>
                 </Splitter.Panel>
                 <Splitter.Panel defaultSize="24%" min="24%">
                     <Flex className="h-full p-2" vertical={true}>

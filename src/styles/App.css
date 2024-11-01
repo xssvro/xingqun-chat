@@ -21,3 +21,16 @@ html, body {
     background-color: #F7DA66; /* 设置选中的背景颜色 */
     /*color: #FFF; !* 设置选中的文字颜色 *!*/
 }
+@keyframes blink {
+    0%, 20%, 100% {
+        transform: scaleY(1); /* 正常状态 */
+    }
+    10% {
+        transform: scaleY(0); /* 收缩到完全闭眼 */
+    }
+}
+
+.animate-blink {
+    animation: blink 6s infinite; /* 每 4 秒眨一次眼，可以调整间隔 */
+    transform-origin: center; /* 中心收缩 */
+}
