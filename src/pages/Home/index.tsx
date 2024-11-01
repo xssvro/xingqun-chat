@@ -16,7 +16,7 @@ const Home: React.FC = () => {
                     {/*</Flex>*/}
                     <Chat></Chat>
                 </Splitter.Panel>
-                <Splitter.Panel defaultSize="24%" min="24%">
+                <Splitter.Panel defaultSize="20%" min="20%">
                     <Flex className="h-full p-2" vertical={true}>
                         <Input.TextArea placeholder="开始你的脑洞~" className="!resize-none flex-1"></Input.TextArea>
                         <Flex className="mt-2" justify="end">
