@@ -92,12 +92,12 @@ const Home: React.FC = () => {
                         if (jsonChunk.lastOne) break;
 
                     } catch (e) {
-                        console.error("JSON 解析失败:", e);
+                        console.error("JSON 解析失败～:", e);
                     }
                 }
             }
         } catch (error) {
-            console.error('请求失败:', error);
+            console.error('请求失败～:', error);
         } finally {
             setIsSending(false); // 解锁
         }
