@@ -15,7 +15,7 @@ if (rootElement) {
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#F73048',  // 自定义主题色
+                    colorPrimary: '#FF770D',  // 自定义主题色
                     borderRadius: 3,
                 },
             }}

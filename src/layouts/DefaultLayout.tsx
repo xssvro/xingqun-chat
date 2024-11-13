@@ -1,10 +1,14 @@
-import React, { PropsWithChildren } from 'react';
+import React, {PropsWithChildren, useState} from 'react';
 import { Button, Layout, Tag, Flex, Input } from 'antd';
-const { Header, Content, Sider } = Layout;
 import { SettingOutlined, OpenAIOutlined, GithubOutlined, WechatOutlined, DiscordOutlined } from '@ant-design/icons';
 import Logo from '@/assets/logo.svg';
+const { Header, Content, Sider } = Layout;
 
 const DefaultLayout: React.FC<PropsWithChildren<{}>> = ({children}) => {
+    const [count, setCount] = useState(0);
+    const handleClick = () => {
+        setCount(count => count + 1);
+    }
     return (
         <Layout style={{height: '100vh'}}>
             <Sider width={240} style={{background: '#fff', padding: 0, borderRight: '1px solid #DDD'}}>
@@ -14,7 +18,8 @@ const DefaultLayout: React.FC<PropsWithChildren<{}>> = ({children}) => {
                     </div>
                     <Flex className="mx-3 flex-1 space-y-3" vertical={true}>
                         <Input.Search placeholder="搜索对话..."></Input.Search>
-                        <Button style={{width: '100%'}} type="primary" size="large">+&ensp;创建新会话</Button>
+                        {count}
+                        <Button onClick={handleClick} style={{width: '100%'}} type="primary" size="large">+&ensp;创建新会话</Button>
                     </Flex>
                     <Flex className="mx-3 mb-3 space-x-4" justify="center" align="center">
                         <GithubOutlined className="text-xl" color="#eee" />
@@ -29,7 +34,7 @@ const DefaultLayout: React.FC<PropsWithChildren<{}>> = ({children}) => {
                         <div className="flex-1 flex items-center">
                             <OpenAIOutlined style={{fontSize: '28px'}}/>
                             <span className="mx-2 !text-xl font-bold">随便聊聊</span>
-                            <Tag>
+                            <Tag color="#FDDB00">
                             ChatGPT-4o
                             </Tag>
                             <Tag>
