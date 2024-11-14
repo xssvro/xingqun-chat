@@ -18,7 +18,6 @@ const DefaultLayout: React.FC<PropsWithChildren<{}>> = ({children}) => {
                     </div>
                     <Flex className="mx-3 flex-1 space-y-3" vertical={true}>
                         <Input.Search placeholder="搜索对话..."></Input.Search>
-                        {count}
                         <Button onClick={handleClick} style={{width: '100%'}} type="primary" size="large">+&ensp;创建新会话</Button>
                     </Flex>
                     <Flex className="mx-3 mb-3 space-x-4" justify="center" align="center">
