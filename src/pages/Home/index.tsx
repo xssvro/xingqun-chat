@@ -3,6 +3,7 @@ import { SendOutlined } from '@ant-design/icons';
 import Chat from './components/Chat.tsx';
 import { ChatData } from './components/Chat.type.ts';
 import { Flex, Splitter, Input, Button } from 'antd';
+import { fetchEventSource } from '@microsoft/fetch-event-source';
 
 const Home: React.FC = () => {
     const [chatData, setChatData] = useState<ChatData[]>([]);
@@ -18,7 +19,6 @@ const Home: React.FC = () => {
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
         }
     };
-
     // 监听 chatData 更新
     useEffect(() => {
         if (autoScroll) {
@@ -39,7 +39,7 @@ const Home: React.FC = () => {
     const handleSendMessage = async () => {
         if (!userMessage.trim() || isSending) return;
 
-        setIsSending(true); // 开始发送消息，设置锁
+        setIsSending(true);
         setUserMessage('');
 
         const userChat: ChatData = {
@@ -52,89 +52,77 @@ const Home: React.FC = () => {
         };
 
         setChatData(prev => [...prev, userChat]);
-        setAutoScroll(true); // 提交时自动滚动
+        setAutoScroll(true);
 
-        // 构建消息上下文，最多保留最近 5 条对话
         const contextMessages = chatData.slice(-5).map(chat => ({
             role: chat.role,
             content: chat.content
         }));
 
-        // 将用户消息也加到历史对话中
         const requestMessages = [
             ...contextMessages,
             { role: 'user', content: userMessage }
         ];
+
+        const gptChatId = Date.now() + 1;
+        const gptChat: ChatData = {
+            id: gptChatId,
+            content: '',
+            message: '',
+            timestamp: Date.now(),
+            type: 'text',
+            role: 'assistant'
+        };
+        setChatData(prev => [...prev, gptChat]);
+
+        let accumulatedContent = '';
+
         try {
-            const response = await fetch('https://api.lingyiwanwu.com/v1/chat/completions', {
+            await fetchEventSource('https://ark.cn-beijing.volces.com/api/v3/chat/completions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer 1a4c6ca07768474fb1b9055f0fc3f198`
+                    'Authorization': `Bearer a3a70185-73df-4d8c-a3a2-78f943f9775b`
                 },
+                credentials: 'include',
                 body: JSON.stringify({
-                    model: 'yi-large',
+                    model: 'ep-20250217143848-xw4l8',
                     messages: requestMessages,
                     stream: true
-                })
-            });
-
-            const reader = response.body?.getReader();
-            if (!reader) throw new Error('流读取失败');
-
-            let accumulatedContent = '';
-            const gptChatId = Date.now() + 1;
-            const gptChat: ChatData = {
-                id: gptChatId,
-                content: '',
-                message: '',
-                timestamp: Date.now(),
-                type: 'text',
-                role: 'assistant'
-            };
-            setChatData(prev => [...prev, gptChat]);
-
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-
-                const chunk = new TextDecoder().decode(value);
-                const lines = chunk.split('\n');
-
-                for (const line of lines) {
-                    if (line.trim() === '' || line.trim() === 'data: [DONE]') continue;
-
-                    // 使用正则提取以 `data:` 开头，并且包含 JSON 格式的行
-                    const jsonMatch = line.match(/^data:\s*(\{.*\})$/);
-
-                    if (jsonMatch) {
-                        const jsonString = jsonMatch[1];
-                        try {
-                            // 仅解析符合 JSON 格式的字符串
-                            const jsonChunk = JSON.parse(jsonString);
-                            const deltaContent = jsonChunk.choices[0]?.delta?.content || '';
-
-                            if (deltaContent) {
-                                accumulatedContent += deltaContent;
-                                setChatData(prev => prev.map(chat =>
-                                    chat.id === gptChatId ? { ...chat, content: accumulatedContent, message: accumulatedContent } : chat
-                                ));
-                            }
-
-                            if (jsonChunk.lastOne) break;
-
-                        } catch (e) {
-                            console.error("JSON 解析失败～:", e);
-                        }
-                    } else {
-                        console.warn("跳过非 JSON 格式的数据:", line);
+                }),
+                // mode: 'no-cors',
+                onmessage(event) {
+                    console.log(event)
+                    if (event.data === '[DONE]') {
+                        return;
                     }
+
+                    try {
+                        // 清理数据
+                        const jsonChunk = JSON.parse(event.data);
+                        const deltaContent = jsonChunk.choices[0]?.delta?.content || '';
+
+                        if (deltaContent) {
+                            accumulatedContent += deltaContent;
+                            setChatData(prev => prev.map(chat =>
+                                chat.id === gptChatId ? { ...chat, content: accumulatedContent, message: accumulatedContent } : chat
+                            ));
+                        }
+                    } catch (e) {
+                        console.error("JSON 解析失败～:", e);
+                    }
+                },
+                onerror(err) {
+                    console.error('请求失败～:', err);
+                    setIsSending(false);
+                },
+                onclose() {
+                    setIsSending(false);
                 }
-            }
+            });
         } catch (error) {
-            console.error('请求失败～:', error);
-        } finally {
-            setIsSending(false); // 解锁
+            console.error('请求异常～:', error);
+            setIsSending(false);
         }
     };
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {

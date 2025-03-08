@@ -1,0 +1,11 @@
+/* Light theme styles */
+.light pre code {
+    background-color: #f6f8fa;
+    color: #24292e;
+}
+
+/* Dark theme styles */
+.dark pre code {
+    background-color: #282a36;
+    color: #f8f8f2;
+}

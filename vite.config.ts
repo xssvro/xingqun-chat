@@ -13,4 +13,14 @@ export default defineConfig({
     svgrOptions: { exportType: "default", ref: true, svgo: false, titleProp: true },
       include: "**/*.svg",
   })],
+  server: {
+    proxy: {
+      // 开发环境下的代理设置
+      '/api/proxy': {
+        target: 'http://localhost:3000', // 开发时启动的本地代理服务器
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/proxy/, '')
+      }
+    }
+  }
 });

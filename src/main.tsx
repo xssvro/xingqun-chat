@@ -4,7 +4,7 @@ import React from 'react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, theme } from 'antd';
 import App from './App';
 import './styles/reset.css';  // 重置样式
 import './styles/App.css';     // 应用全局样式
@@ -15,9 +15,10 @@ if (rootElement) {
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#FF770D',  // 自定义主题色
+                    colorPrimary: '#A62C28',  // 自定义主题色
                     borderRadius: 3,
                 },
+                cssVar: true
             }}
         >
             <StrictMode>
